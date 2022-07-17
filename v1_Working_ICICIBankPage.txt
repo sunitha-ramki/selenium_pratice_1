@@ -1,0 +1,31 @@
+// All three actions in a single file working till login page
+using System;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using Xunit;
+
+namespace IciciBankProject
+{
+    public class UnitTest1
+    {
+        private IWebDriver _driver;
+        // Got a build error when below constructor name is not same as class name
+        public UnitTest1()
+        {
+            _driver = new ChromeDriver();
+            _driver.Manage().Window.Maximize();
+        }
+
+        [Fact]
+        public void ToOpen_IciciBankMainPage()
+        {
+            _driver.Navigate().GoToUrl("https://www.icicibank.com/");
+            Assert.Equal("Personal Banking & Netbanking Services Online - ICICI Bank", _driver.Title);
+
+            var clickLaterButton = _driver.FindElement(By.Id("push-modal-close"));
+            clickLaterButton.Click();
+
+            var clickLoginButton = _driver.FindElement(By.Id("login-btn"));
+            clickLoginButton.Click();
+            Assert.Equal("Log in to Internet Banking", _driver.Title);
+        }
